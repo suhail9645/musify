@@ -168,7 +168,9 @@ class SearchPageTextFormField extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, 'SearchResultScreen');
+                    },
                     child: const Icon(
                       Icons.search,
                       color: Colors.white,

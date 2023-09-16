@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       )),
-      bottomNavigationBar:const BottemNavigationBar(),
+      bottomNavigationBar: const BottemNavigationBar(),
     );
   }
 }
@@ -43,8 +43,8 @@ class BottemNavigationBar extends StatelessWidget {
       Icons.forward
     ];
     return Container(
-      padding:const EdgeInsets.symmetric(horizontal: 20),
-      height: 60,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      height: 50,
       width: double.infinity,
       color: const Color.fromARGB(255, 49, 48, 48),
       child: Row(
@@ -133,20 +133,8 @@ class HomeExplore extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const Spacer(),
-              InkWell(
-                child: Container(
-                  height: 30,
-                  width: 90,
-                  decoration: BoxDecoration(
-                      color: primaryButtonColor,
-                      borderRadius: BorderRadius.circular(25)),
-                  child: Center(
-                    child: Text(
-                      'Explore',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
-                ),
+              PrimaryButton(text: 'Explore',
+                onTap: () => Navigator.pushNamed(context, 'SearchScreen'),
               )
             ],
           ),
@@ -191,6 +179,37 @@ class HomeExplore extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class PrimaryButton extends StatelessWidget {
+  const PrimaryButton({
+    super.key,
+    required this.onTap,
+    this.height,
+    this.width, required this.text,
+  });
+  final Function() onTap;
+  final double? height;
+  final double? width;
+  final String text;
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 30,
+        width: 90,
+        decoration: BoxDecoration(
+            color: primaryButtonColor, borderRadius: BorderRadius.circular(25)),
+        child: Center(
+          child: Text(
+            text,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ),
       ),
     );
   }

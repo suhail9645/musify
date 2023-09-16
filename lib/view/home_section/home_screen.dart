@@ -9,7 +9,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    double screenHeight = screenSize.height;
     double screenWidth = screenSize.width;
     return Scaffold(
       body: SafeArea(
@@ -133,7 +132,8 @@ class HomeExplore extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const Spacer(),
-              PrimaryButton(text: 'Explore',
+              PrimaryButton(
+                text: 'Explore',
                 onTap: () => Navigator.pushNamed(context, 'SearchScreen'),
               )
             ],
@@ -189,7 +189,8 @@ class PrimaryButton extends StatelessWidget {
     super.key,
     required this.onTap,
     this.height,
-    this.width, required this.text,
+    this.width,
+    required this.text,
   });
   final Function() onTap;
   final double? height;

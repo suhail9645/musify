@@ -50,4 +50,3 @@ class SearchResultScreen extends StatelessWidget {
     );
   }
 }
-

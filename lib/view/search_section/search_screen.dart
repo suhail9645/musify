@@ -9,7 +9,6 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    double screenHeight = screenSize.height;
     double screenWidth = screenSize.width;
     return Scaffold(
       body: SafeArea(

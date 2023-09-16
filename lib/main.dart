@@ -20,13 +20,18 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
           textTheme: TextTheme(
-            bodyLarge: GoogleFonts.ubuntu(fontSize: 22, fontWeight: FontWeight.bold),
-            bodySmall:  GoogleFonts.ubuntu(fontSize: 14, fontWeight: FontWeight.w500),
-             bodyMedium:  GoogleFonts.ubuntu(fontSize: 16, fontWeight: FontWeight.bold),
-             titleSmall:  GoogleFonts.ubuntu(fontSize: 12,),
+            bodyLarge:
+                GoogleFonts.ubuntu(fontSize: 22, fontWeight: FontWeight.bold),
+            bodySmall:
+                GoogleFonts.ubuntu(fontSize: 14, fontWeight: FontWeight.w500),
+            bodyMedium:
+                GoogleFonts.ubuntu(fontSize: 16, fontWeight: FontWeight.bold),
+            titleSmall: GoogleFonts.ubuntu(
+              fontSize: 12,
+            ),
           ).apply(
-            bodyColor: const Color.fromARGB(255, 246, 244, 245), 
-            displayColor:  const Color.fromARGB(255, 246, 244, 245),
+            bodyColor: const Color.fromARGB(255, 246, 244, 245),
+            displayColor: const Color.fromARGB(255, 246, 244, 245),
           ),
         ),
         onGenerateRoute: router.onGenerateRoute);

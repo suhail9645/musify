@@ -34,8 +34,8 @@ class SearchResultItem extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                     height: screenWidth * 0.35,
                     decoration: BoxDecoration(
                       image: const DecorationImage(
@@ -53,10 +53,8 @@ class SearchResultItem extends StatelessWidget {
                               height: 25,
                               width: 56,
                               decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(25),
-                                  color: const Color.fromARGB(
-                                      255, 33, 33, 32)),
+                                  borderRadius: BorderRadius.circular(25),
+                                  color: const Color.fromARGB(255, 33, 33, 32)),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -73,8 +71,8 @@ class SearchResultItem extends StatelessWidget {
                             const Spacer(),
                             CircleAvatar(
                               radius: 15,
-                              backgroundColor: const Color.fromARGB(
-                                  255, 33, 33, 32),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 33, 33, 32),
                               child: Icon(
                                 Icons.favorite,
                                 color: primaryIconsColor,

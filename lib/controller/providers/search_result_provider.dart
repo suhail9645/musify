@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-class SearchResultProvider extends ChangeNotifier{
+// class SearchResultProvider extends ChangeNotifier{
   
-}
+// }

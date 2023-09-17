@@ -5,10 +5,10 @@ import 'artist.dart';
 import 'external_ids.dart';
 import 'external_urls.dart';
 
-part 'item.g.dart';
+part 'track_item.g.dart';
 
 @JsonSerializable()
-class Item {
+class TrackItem {
   Album? album;
   List<Artist>? artists;
   @JsonKey(name: 'disc_number')
@@ -35,7 +35,7 @@ class Item {
   String? type;
   String? uri;
 
-  Item({
+  TrackItem({
     this.album,
     this.artists,
     this.discNumber,
@@ -55,7 +55,7 @@ class Item {
     this.uri,
   });
 
-  factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
+  factory TrackItem.fromJson(Map<String, dynamic> json) => _$TrackItemFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ItemToJson(this);
+  Map<String, dynamic> toJson() => _$TrackItemToJson(this);
 }

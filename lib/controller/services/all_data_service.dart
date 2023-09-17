@@ -33,7 +33,17 @@ class AllDataServiceImp {
           options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
           return handler.next(options);
         },
-        onError: (e, handler) {
+        onError: (e, handler)async {
+          if(e.response!.statusCode==401){
+
+         
+       final newAccessKey= await  AccessToken().getAccessToken();
+       if(newAccessKey.isRight){
+            e.requestOptions.headers['Authorization'] =
+                    'Bearer ${newAccessKey.right}';
+           return handler.resolve(await dio.fetch(e.requestOptions));
+       }
+          }
           return handler.next(e);
         },
       ));

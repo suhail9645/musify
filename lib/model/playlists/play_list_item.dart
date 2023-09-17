@@ -1,14 +1,15 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:musify/model/playlists/tracks.dart';
 
 import 'external_urls.dart';
 import 'image.dart';
 import 'owner.dart';
-import 'tracks.dart';
 
-part 'item.g.dart';
+
+part 'play_list_item.g.dart';
 
 @JsonSerializable()
-class Item {
+class PlayListItem {
   bool? collaborative;
   String? description;
   @JsonKey(name: 'external_urls')
@@ -27,7 +28,7 @@ class Item {
   String? type;
   String? uri;
 
-  Item({
+  PlayListItem({
     this.collaborative,
     this.description,
     this.externalUrls,
@@ -44,7 +45,7 @@ class Item {
     this.uri,
   });
 
-  factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
+  factory PlayListItem.fromJson(Map<String, dynamic> json) => _$PlayListItemFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ItemToJson(this);
+  Map<String, dynamic> toJson() => _$PlayListItemToJson(this);
 }

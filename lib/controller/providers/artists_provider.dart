@@ -1,21 +1,32 @@
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
-import 'package:musify/controller/services/access_token.dart';
 import 'package:musify/controller/services/all_data_service.dart';
-import 'package:musify/core/const/urls.dart';
 import 'package:musify/model/artists/artist_item.dart';
+import 'package:musify/model/artists/artists.dart';
 import 'package:musify/model/failure.dart/failure.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class ArtistsProvider extends ChangeNotifier {
-  Either<Failure, List<ArtistItem>> failureOrSuccess = const Right([]);
+  Either<Failure, List<ArtistItem>> failureOrSuccess=Left(Failure(errorMessage: '')) ;
   bool isLoading = true;
   Future<void> getPopularArtists() async {
-   final successOrFailure=await AllDataServiceImp().getDatasWithType('artist', 'Malayalam');
+   final successOrFailure=await AllDataServiceImp().getDatasWithType('artist', 'Hindi');
    if(successOrFailure.isRight){
     List<ArtistItem>allItems=[];
+    Response response=successOrFailure.right;
+
+    Artists data=Artists.fromJson(response.data['artists']);
+    for (var element in data.allItems??[]) {
+     
+      allItems.add(element);
+    }
+    failureOrSuccess=Right(allItems);
+    notifyListeners();
     
+   }else{
+    failureOrSuccess=Left(Failure(errorMessage: successOrFailure.left.errorMessage));
    }
+
   }
 }

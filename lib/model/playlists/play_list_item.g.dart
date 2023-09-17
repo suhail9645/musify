@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'item.dart';
+part of 'play_list_item.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Item _$ItemFromJson(Map<String, dynamic> json) => Item(
+PlayListItem _$PlayListItemFromJson(Map<String, dynamic> json) => PlayListItem(
       collaborative: json['collaborative'] as bool?,
       description: json['description'] as String?,
       externalUrls: json['external_urls'] == null
@@ -32,7 +32,8 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       uri: json['uri'] as String?,
     );
 
-Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
+Map<String, dynamic> _$PlayListItemToJson(PlayListItem instance) =>
+    <String, dynamic>{
       'collaborative': instance.collaborative,
       'description': instance.description,
       'external_urls': instance.externalUrls,

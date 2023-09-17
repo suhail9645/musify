@@ -1,14 +1,15 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:musify/model/artists/artist_item.dart';
 
-import 'artists.dart';
 
 part 'artists.g.dart';
 
 @JsonSerializable()
 class Artists {
-  Artists? artists;
-
-  Artists({this.artists});
+  @JsonKey(name: 'items')
+  List<ArtistItem>?allItems;
+  
+  Artists({this.allItems});
 
   factory Artists.fromJson(Map<String, dynamic> json) {
     return _$ArtistsFromJson(json);

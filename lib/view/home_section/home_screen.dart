@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:musify/controller/providers/artists_provider.dart';
 import 'package:musify/core/const/colors.dart';
 import 'package:musify/core/const/string.dart';
 import 'package:musify/core/const/widget.dart';
+import 'package:musify/model/artists/artist_item.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<ArtistsProvider>(context, listen: false).getPopularArtists();
+    });
+
     Size screenSize = MediaQuery.of(context).size;
     double screenWidth = screenSize.width;
     return Scaffold(
@@ -18,7 +26,6 @@ class HomeScreen extends StatelessWidget {
           children: [
             const HomeHeader(),
             HomeExplore(screenWidth: screenWidth),
-            hightSpace20,
             const HomePopularSongs()
           ],
         ),
@@ -119,68 +126,87 @@ class HomeExplore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 220,
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      child: Column(
-        children: [
-          Row(
+    return Consumer<ArtistsProvider>(builder: (context, value, child) {
+      if (value.failureOrSuccess.isRight) {
+        List<ArtistItem> allArtistData = value.failureOrSuccess.right;
+        
+      
+        return Container(
+          height: 220,
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          child: Column(
             children: [
-              Text(
-                'Discover Music',
-                style: Theme.of(context).textTheme.bodyLarge,
+              Row(
+                children: [
+                  Text(
+                    'Discover Music',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  const Spacer(),
+                  PrimaryButton(
+                    text: 'Explore',
+                    onTap: () => Navigator.pushNamed(context, 'SearchScreen'),
+                  )
+                ],
               ),
-              const Spacer(),
-              PrimaryButton(
-                text: 'Explore',
-                onTap: () => Navigator.pushNamed(context, 'SearchScreen'),
+              hightSpace10,
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    allArtistData.length,
+                    (index) {
+                 String? image=allArtistData[index].images?.last.url;
+                 String? text=allArtistData[index].name;
+                    return Padding(
+                      padding: const EdgeInsets.only(right:10.0),
+                      child: Container(
+                                       
+                        width: screenWidth * 0.29,
+                        height: screenWidth * 0.34,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          image: DecorationImage(
+                              image: NetworkImage(image??homeHeaderImage),
+                              fit: BoxFit.fill),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color:const Color.fromARGB(180, 174, 88, 231),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  
+                                  text!,textAlign: TextAlign.center,
+                                  style: GoogleFonts.ubuntu(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: primaryTextColor),
+                                ),
+                               
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                    }
+                  ),
+                ),
               )
             ],
           ),
-          hightSpace10,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(
-              3,
-              (index) => Container(
-                width: screenWidth * 0.29,
-                height: screenWidth * 0.34,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  image: const DecorationImage(
-                      image: NetworkImage(homeHeaderImage), fit: BoxFit.fill),
-                ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(207, 174, 88, 231),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Hip-Hop',
-                          style: GoogleFonts.ubuntu(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: primaryTextColor),
-                        ),
-                        Text(
-                          'EDM',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+        );
+      } else {
+        return const CircularProgressIndicator();
+      }
+    });
   }
 }
 

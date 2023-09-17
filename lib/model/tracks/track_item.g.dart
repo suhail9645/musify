@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'item.dart';
+part of 'track_item.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Item _$ItemFromJson(Map<String, dynamic> json) => Item(
+TrackItem _$TrackItemFromJson(Map<String, dynamic> json) => TrackItem(
       album: json['album'] == null
           ? null
           : Album.fromJson(json['album'] as Map<String, dynamic>),
@@ -35,7 +35,7 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       uri: json['uri'] as String?,
     );
 
-Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
+Map<String, dynamic> _$TrackItemToJson(TrackItem instance) => <String, dynamic>{
       'album': instance.album,
       'artists': instance.artists,
       'disc_number': instance.discNumber,

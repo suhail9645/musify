@@ -4,10 +4,10 @@ import 'external_urls.dart';
 import 'followers.dart';
 import 'image.dart';
 
-part 'item.g.dart';
+part 'artist_item.g.dart';
 
 @JsonSerializable()
-class Item {
+class ArtistItem {
   @JsonKey(name: 'external_urls')
   ExternalUrls? externalUrls;
   Followers? followers;
@@ -20,7 +20,7 @@ class Item {
   String? type;
   String? uri;
 
-  Item({
+  ArtistItem({
     this.externalUrls,
     this.followers,
     this.genres,
@@ -33,7 +33,7 @@ class Item {
     this.uri,
   });
 
-  factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
+  factory ArtistItem.fromJson(Map<String, dynamic> json) => _$ArtistItemFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ItemToJson(this);
+  Map<String, dynamic> toJson() => _$ArtistItemToJson(this);
 }

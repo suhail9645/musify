@@ -7,16 +7,27 @@ import 'package:musify/view/search_section/widget/trending_tracks.dart';
 import 'package:provider/provider.dart';
 import 'widget/search_header.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   SearchScreen({super.key});
-  final TextEditingController controller = TextEditingController();
+
   @override
-  Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  final TextEditingController controller = TextEditingController();
+@override
+  void initState() {
+   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<TrendingTrackProvider>(context, listen: false)
           .getTrendingTracks();
       Provider.of<PlayListProvider>(context, listen: false).getPlayLists();
     });
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+   
     Size screenSize = MediaQuery.of(context).size;
     double screenWidth = screenSize.width;
     return Scaffold(

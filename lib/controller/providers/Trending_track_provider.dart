@@ -15,7 +15,7 @@ class TrendingTrackProvider extends ChangeNotifier {
     notifyListeners();
     await Future.delayed(const Duration(seconds: 3)); //only for testing
     final successOrFailure =
-        await AllDataServiceImp().getDatasWithType('track', 'trend');
+        await AllDataServiceImp().getDatasWithType('track', 'SA');
     isLoading = false;
 
     if (successOrFailure.isRight) {

@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:musify/controller/providers/Trending_track_provider.dart';
 import 'package:musify/core/const/colors.dart';
 import 'package:musify/core/const/string.dart';
 import 'package:musify/core/const/widget.dart';
+import 'package:musify/model/tracks/track_item.dart';
 import 'package:musify/view/home_section/home_screen.dart';
+import 'package:provider/provider.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<TrendingTrackProvider>(context, listen: false).getTrendingTracks();
+      
+    });
     Size screenSize = MediaQuery.of(context).size;
     double screenWidth = screenSize.width;
     return Scaffold(
@@ -90,52 +97,67 @@ class RecentSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-      height: screenWidth * 0.72,
-      width: double.infinity,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                'Recent Searches',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              const Spacer(),
-              PrimaryButton(
-                text: 'Clear',
-                onTap: () {},
-              )
-            ],
-          ),
-          Column(
-            children: List.generate(
-              4,
-              (index) => ListTile(
-                dense: true,
-                leading: const CircleAvatar(
-                  radius: 25,
-                  backgroundImage: NetworkImage(homeHeaderImage),
+    return Consumer<TrendingTrackProvider>(
+      builder: (context, value, child) {
+        List<TrackItem>allTrendingTracks=value.failureOrSuccess.right;
+      if(value.failureOrSuccess.isRight){
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+        height: screenWidth * 0.72,
+        width: double.infinity,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  'Trending Tracks',
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
-                title: Text(
-                  'Cali lIving',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                subtitle: Text(
-                  'Alma',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                trailing: const Icon(
-                  Icons.arrow_forward_ios,
-                  size: 20,
-                  color: Colors.white,
-                ),
-              ),
+                const Spacer(),
+                PrimaryButton(
+                  text: 'Clear',
+                  onTap: () {},
+                )
+              ],
             ),
-          )
-        ],
-      ),
+            Column(
+              children: List.generate(
+                4,
+                (index) {
+                    String? leadingImage=allTrendingTracks[index].album?.images?.last.url;
+                String? title=allTrendingTracks[index].album?.name?.split('(').first;
+                String? subtitle=allTrendingTracks[index].artists?.first.name;
+                return ListTile(
+                  dense: true,
+                  leading:  CircleAvatar(
+                    radius: 25,
+                    backgroundImage: NetworkImage(leadingImage?? homeHeaderImage),
+                  ),
+                  title: Text(
+                    title??'Unknown',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  subtitle: Text(
+                    subtitle??'Unknown',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  trailing: const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                );
+                }
+              ),
+            )
+          ],
+        ),
+      );
+      }
+      else{
+        return const CircularProgressIndicator();
+      }
+      }
     );
   }
 }

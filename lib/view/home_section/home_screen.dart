@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:musify/controller/providers/artists_provider.dart';
+import 'package:musify/controller/providers/track_item_provider.dart';
 import 'package:musify/core/const/colors.dart';
 import 'package:musify/core/const/string.dart';
 import 'package:musify/core/const/widget.dart';
 import 'package:musify/model/artists/artist_item.dart';
 import 'package:provider/provider.dart';
+
+import 'widget/home_popular.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,6 +17,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<ArtistsProvider>(context, listen: false).getPopularArtists();
+       Provider.of<TrackItemeProvider>(context, listen: false).getPopularTracks();
     });
 
     Size screenSize = MediaQuery.of(context).size;
@@ -67,55 +71,6 @@ class BottemNavigationBar extends StatelessWidget {
   }
 }
 
-class HomePopularSongs extends StatelessWidget {
-  const HomePopularSongs({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                'Popular Songs',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-            ],
-          ),
-          hightSpace10,
-          Column(
-            children: List.generate(
-              3,
-              (index) => ListTile(
-                leading: const CircleAvatar(
-                  radius: 25,
-                  backgroundImage: NetworkImage(homeHeaderImage),
-                ),
-                title: Text(
-                  'Cali lIving',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                subtitle: Text(
-                  'Alma',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                trailing: const Icon(
-                  Icons.play_arrow,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class HomeExplore extends StatelessWidget {
   const HomeExplore({
     super.key,
@@ -129,8 +84,7 @@ class HomeExplore extends StatelessWidget {
     return Consumer<ArtistsProvider>(builder: (context, value, child) {
       if (value.failureOrSuccess.isRight) {
         List<ArtistItem> allArtistData = value.failureOrSuccess.right;
-        
-      
+
         return Container(
           height: 220,
           width: double.infinity,
@@ -155,26 +109,23 @@ class HomeExplore extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List.generate(
-                    allArtistData.length,
-                    (index) {
-                 String? image=allArtistData[index].images?.last.url;
-                 String? text=allArtistData[index].name;
+                  children: List.generate(allArtistData.length, (index) {
+                    String? image = allArtistData[index].images?.last.url;
+                    String? text = allArtistData[index].name;
                     return Padding(
-                      padding: const EdgeInsets.only(right:10.0),
+                      padding: const EdgeInsets.only(right: 10.0),
                       child: Container(
-                                       
                         width: screenWidth * 0.29,
                         height: screenWidth * 0.34,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
                           image: DecorationImage(
-                              image: NetworkImage(image??homeHeaderImage),
+                              image: NetworkImage(image ?? homeHeaderImage),
                               fit: BoxFit.fill),
                         ),
                         child: Container(
                           decoration: BoxDecoration(
-                            color:const Color.fromARGB(180, 174, 88, 231),
+                            color: const Color.fromARGB(180, 174, 88, 231),
                             borderRadius: BorderRadius.circular(25),
                           ),
                           child: Center(
@@ -182,22 +133,20 @@ class HomeExplore extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  
-                                  text!,textAlign: TextAlign.center,
+                                  text!,
+                                  textAlign: TextAlign.center,
                                   style: GoogleFonts.ubuntu(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       color: primaryTextColor),
                                 ),
-                               
                               ],
                             ),
                           ),
                         ),
                       ),
                     );
-                    }
-                  ),
+                  }),
                 ),
               )
             ],

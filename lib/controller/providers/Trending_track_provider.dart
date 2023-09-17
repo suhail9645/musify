@@ -1,17 +1,17 @@
-
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
-import 'package:musify/model/failure.dart/failure.dart';
-import 'package:musify/model/tracks/tracks.dart';
+
+import '../../model/failure.dart/failure.dart';
 import '../../model/tracks/track_item.dart';
+import '../../model/tracks/tracks.dart';
 import '../services/all_data_service.dart';
 
-class TrackItemeProvider extends ChangeNotifier{
+class TrendingTrackProvider extends ChangeNotifier{
   Either<Failure,List<TrackItem>>failureOrSuccess=const Right([]);
   bool isLoading=true;
-  Future<void> getPopularTracks() async {
-   final successOrFailure=await AllDataServiceImp().getDatasWithType('track', 'Malayalam');
+  Future<void> getTrendingTracks() async {
+   final successOrFailure=await AllDataServiceImp().getDatasWithType('track', 'trend');
    if(successOrFailure.isRight){
     List<TrackItem>allItems=[];
     Response response=successOrFailure.right;

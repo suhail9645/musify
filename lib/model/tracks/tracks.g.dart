@@ -7,11 +7,11 @@ part of 'tracks.dart';
 // **************************************************************************
 
 Tracks _$TracksFromJson(Map<String, dynamic> json) => Tracks(
-      tracks: json['tracks'] == null
-          ? null
-          : Tracks.fromJson(json['tracks'] as Map<String, dynamic>),
+      allPopularTracks: (json['items'] as List<dynamic>?)
+          ?.map((e) => TrackItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$TracksToJson(Tracks instance) => <String, dynamic>{
-      'tracks': instance.tracks,
+      'items': instance.allPopularTracks,
     };

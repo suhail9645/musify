@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:musify/model/playlists/play_list_item.dart';
 
 import 'playlists.dart';
 
@@ -6,9 +7,10 @@ part 'playlists.g.dart';
 
 @JsonSerializable()
 class Playlists {
-  Playlists? playlists;
+    @JsonKey(name: 'items')
+  List<PlayListItem>? playLists;
 
-  Playlists({this.playlists});
+  Playlists({this.playLists});
 
   factory Playlists.fromJson(Map<String, dynamic> json) {
     return _$PlaylistsFromJson(json);

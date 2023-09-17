@@ -7,11 +7,11 @@ part of 'playlists.dart';
 // **************************************************************************
 
 Playlists _$PlaylistsFromJson(Map<String, dynamic> json) => Playlists(
-      playlists: json['playlists'] == null
-          ? null
-          : Playlists.fromJson(json['playlists'] as Map<String, dynamic>),
+      playLists: (json['items'] as List<dynamic>?)
+          ?.map((e) => PlayListItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$PlaylistsToJson(Playlists instance) => <String, dynamic>{
-      'playlists': instance.playlists,
+      'items': instance.playLists,
     };

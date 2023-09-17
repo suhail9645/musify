@@ -11,7 +11,12 @@ class PlayListProvider extends ChangeNotifier{
   Either<Failure,List<PlayListItem>>failureOrSuccess= Left(Failure(errorMessage: ''));
   bool isLoading=true;
   Future<void> getPlayLists() async {
-   final successOrFailure=await AllDataServiceImp().getDatasWithType('playlist', 'Malayalam');
+    isLoading=true;
+     notifyListeners();
+     await Future.delayed(const Duration(seconds: 3)); //only for testing
+   final successOrFailure=await AllDataServiceImp().getDatasWithType('playlist', 'fejo');
+   isLoading=false;
+    notifyListeners();
    if(successOrFailure.isRight){
     List<PlayListItem>allItems=[];
     Response response=successOrFailure.right;
@@ -26,6 +31,7 @@ class PlayListProvider extends ChangeNotifier{
     
    }else{
     failureOrSuccess=Left(Failure(errorMessage: successOrFailure.left.errorMessage));
+     notifyListeners();
    }
 
   }

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:musify/controller/providers/artists_provider.dart';
 import 'package:musify/controller/providers/track_item_provider.dart';
-import 'package:musify/core/const/colors.dart';
-import 'package:musify/core/const/string.dart';
-import 'package:musify/core/const/widget.dart';
-import 'package:musify/model/artists/artist_item.dart';
 import 'package:provider/provider.dart';
-
+import 'widget/home_artists.dart';
+import 'widget/home_header.dart';
 import 'widget/home_popular.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -29,7 +25,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             const HomeHeader(),
-            HomeExplore(screenWidth: screenWidth),
+            HomeArtists(screenWidth: screenWidth),
             const HomePopularSongs()
           ],
         ),
@@ -39,158 +35,3 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-
-class HomeExplore extends StatelessWidget {
-  const HomeExplore({
-    super.key,
-    required this.screenWidth,
-  });
-
-  final double screenWidth;
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<ArtistsProvider>(builder: (context, value, child) {
-      if (value.failureOrSuccess.isRight) {
-        List<ArtistItem> allArtistData = value.failureOrSuccess.right;
-
-        return Container(
-          height: 220,
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Text(
-                    'Discover Music',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const Spacer(),
-                  PrimaryButton(
-                    text: 'Explore',
-                    onTap: () => Navigator.pushNamed(context, 'SearchScreen'),
-                  )
-                ],
-              ),
-              hightSpace10,
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List.generate(allArtistData.length, (index) {
-                    String? image = allArtistData[index].images?.last.url;
-                    String? text = allArtistData[index].name;
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      child: Container(
-                        width: screenWidth * 0.29,
-                        height: screenWidth * 0.34,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          image: DecorationImage(
-                              image: NetworkImage(image ?? homeHeaderImage),
-                              fit: BoxFit.fill),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(180, 174, 88, 231),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  text!,
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.ubuntu(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: primaryTextColor),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-              )
-            ],
-          ),
-        );
-      } else {
-        return const CircularProgressIndicator();
-      }
-    });
-  }
-}
-
-class PrimaryButton extends StatelessWidget {
-  const PrimaryButton({
-    super.key,
-    required this.onTap,
-    this.height,
-    this.width,
-    required this.text,
-  });
-  final Function() onTap;
-  final double? height;
-  final double? width;
-  final String text;
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: 30,
-        width: 90,
-        decoration: BoxDecoration(
-            color: primaryButtonColor, borderRadius: BorderRadius.circular(25)),
-        child: Center(
-          child: Text(
-            text,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class HomeHeader extends StatelessWidget {
-  const HomeHeader({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      width: double.infinity,
-      height: 60,
-      child: Row(
-        children: [
-          Text(
-            'Good afternoon,Comensec',
-            style: GoogleFonts.ubuntu(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: primaryTextColor),
-          ),
-          const Spacer(),
-          Icon(
-            Icons.headphones,
-            color: primaryTextColor,
-          ),
-          widthSpace10,
-          const CircleAvatar(
-            backgroundImage: NetworkImage(homeHeaderImage),
-          )
-        ],
-      ),
-    );
-  }
-}

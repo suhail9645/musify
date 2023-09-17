@@ -11,7 +11,13 @@ class SearchResultProvider extends ChangeNotifier{
   Either<Failure,List<TrackItem>>failureOrSuccess=const Right([]);
   bool isLoading=true;
   Future<void> getSearchResult(String query) async {
+    isLoading=true;
+    isLoading=true;
+    notifyListeners();
+     await Future.delayed(const Duration(seconds: 3)); //only for testing
    final successOrFailure=await AllDataServiceImp().getDatasWithType('track', query);
+   isLoading=false;
+     notifyListeners();
    if(successOrFailure.isRight){
     List<TrackItem>allItems=[];
     Response response=successOrFailure.right;

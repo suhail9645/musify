@@ -11,7 +11,12 @@ class TrackItemeProvider extends ChangeNotifier{
   Either<Failure,List<TrackItem>>failureOrSuccess=const Right([]);
   bool isLoading=true;
   Future<void> getPopularTracks() async {
+    isLoading=true;
+    notifyListeners();
+     await Future.delayed(const Duration(seconds: 3)); //only for testing
    final successOrFailure=await AllDataServiceImp().getDatasWithType('track', 'Malayalam');
+   isLoading=false;
+   notifyListeners();
    if(successOrFailure.isRight){
     List<TrackItem>allItems=[];
     Response response=successOrFailure.right;
@@ -26,6 +31,7 @@ class TrackItemeProvider extends ChangeNotifier{
     
    }else{
     failureOrSuccess=Left(Failure(errorMessage: successOrFailure.left.errorMessage));
+   notifyListeners();
    }
 
   }

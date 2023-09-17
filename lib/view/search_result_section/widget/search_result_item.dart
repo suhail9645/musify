@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:musify/controller/providers/search_result_provider.dart';
 import 'package:musify/core/const/colors.dart';
 import 'package:musify/core/const/string.dart';
 import 'package:musify/model/tracks/track_item.dart';
 import 'package:provider/provider.dart';
-
-import '../../home_section/home_screen.dart';
+import 'package:shimmer/shimmer.dart';
+import '../../widget/primary_button.dart';
 
 class SearchResultItem extends StatelessWidget {
   const SearchResultItem({
@@ -23,17 +22,33 @@ class SearchResultItem extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Consumer<SearchResultProvider>(builder: (context, value, child) {
-          if (value.failureOrSuccess.isRight) {
-            List<TrackItem>searchResult=value.failureOrSuccess.right;
+          if (value.isLoading) {
             return Column(
               children: List.generate(
-                10,
-                (index) {
-                  String? image=searchResult[index].album?.images?.first.url;
-                  String name=searchResult[index].name??'Unknown';
-                  String artist=searchResult[index].artists?.first.name??'Unknown';
-                  String popularity=searchResult[index].popularity.toString();
-              return   Container(
+                  4,
+                  (index) => Shimmer.fromColors(
+                        baseColor: shimmerBase,
+                        highlightColor: shimmerHighlight,
+                        child: Container(
+                          margin: const EdgeInsets.only(bottom: 10),
+                          height: screenWidth * 0.48,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.black),
+                        ),
+                      )),
+            );
+          } else if (value.failureOrSuccess.isRight) {
+            List<TrackItem> searchResult = value.failureOrSuccess.right;
+            return Column(
+              children: List.generate(10, (index) {
+                String? image = searchResult[index].album?.images?.first.url;
+                String name = searchResult[index].name ?? 'Unknown';
+                String artist =
+                    searchResult[index].artists?.first.name ?? 'Unknown';
+                String popularity = searchResult[index].popularity.toString();
+                return Container(
                   margin: const EdgeInsets.only(bottom: 10),
                   padding: const EdgeInsets.all(8),
                   height: screenWidth * 0.48,
@@ -49,9 +64,9 @@ class SearchResultItem extends StatelessWidget {
                             horizontal: 8, vertical: 8),
                         height: screenWidth * 0.35,
                         decoration: BoxDecoration(
-                          image:  DecorationImage(
+                          image: DecorationImage(
                               opacity: 0.8,
-                              image: NetworkImage( image?? homeHeaderImage),
+                              image: NetworkImage(image ?? homeHeaderImage),
                               fit: BoxFit.fill),
                           borderRadius: BorderRadius.circular(25),
                         ),
@@ -76,7 +91,7 @@ class SearchResultItem extends StatelessWidget {
                                         color: primaryIconsColor,
                                         size: 20,
                                       ),
-                                       Text(popularity)
+                                      Text(popularity)
                                     ],
                                   ),
                                 ),
@@ -102,24 +117,25 @@ class SearchResultItem extends StatelessWidget {
                           Expanded(
                             flex: 3,
                             child: Text(
-                           ' "$name" by $artist',overflow: TextOverflow.ellipsis,
+                              ' "$name" by $artist',
+                              overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.raleway(fontSize: 16),
                             ),
                           ),
-                         
                           Expanded(
-                            flex: 1,
-                            child: PrimaryButton(onTap: () {}, text: "Play"))
+                              flex: 1,
+                              child: PrimaryButton(onTap: () {}, text: "Play"))
                         ],
                       )
                     ],
                   ),
                 );
-                }
-              ),
+              }),
             );
           } else {
-            return const CircularProgressIndicator();
+            return const Center(
+              child: Text('Something wrong'),
+            );
           }
         }),
       ),

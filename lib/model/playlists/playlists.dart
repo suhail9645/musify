@@ -1,8 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:musify/model/playlists/play_list_item.dart';
-
-import 'playlists.dart';
-
 part 'playlists.g.dart';
 
 @JsonSerializable()

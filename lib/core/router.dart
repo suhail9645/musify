@@ -12,12 +12,16 @@ class AppRouter {
         );
       case 'SearchScreen':
         return MaterialPageRoute(
-          builder: (context) => const SearchScreen(),
+          builder: (context) =>  SearchScreen(),
         );
       case 'SearchResultScreen':
-        return MaterialPageRoute(
-          builder: (context) => const SearchResultScreen(),
-        );
+        return MaterialPageRoute(builder: (context) {
+          SearchResultScreen screen =
+              routeSettings.arguments as SearchResultScreen;
+          return SearchResultScreen(
+            query: screen.query,
+          );
+        });
       default:
         return MaterialPageRoute(
           builder: (_) => const SizedBox(),

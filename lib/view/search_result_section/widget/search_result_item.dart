@@ -67,7 +67,7 @@ class SearchResultItem extends StatelessWidget {
                           image: DecorationImage(
                               opacity: 0.8,
                               image: NetworkImage(image ?? homeHeaderImage),
-                              fit: BoxFit.fill),
+                              fit: BoxFit.cover),
                           borderRadius: BorderRadius.circular(25),
                         ),
                         child: Column(

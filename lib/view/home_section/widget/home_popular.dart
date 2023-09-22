@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controller/providers/track_item_provider.dart';
@@ -13,6 +14,7 @@ class HomePopularSongs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       child: Column(
@@ -53,9 +55,14 @@ class HomePopularSongs extends StatelessWidget {
                       subtitle ?? 'Unknown',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
-                    trailing: const Icon(
-                      Icons.play_arrow,
-                      color: Colors.white,
+                    trailing: InkWell(
+                      onTap: () {
+                       
+                      },
+                      child: const Icon(
+                        Icons.play_arrow,
+                        color: Colors.white,
+                      ),
                     ),
                   );
                 }),

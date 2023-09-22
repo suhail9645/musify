@@ -23,7 +23,7 @@ class SearchPageTextFormField extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: screenWidth * 0.72,
+            width: screenWidth * 0.70,
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 54, 54, 54),
               borderRadius: BorderRadius.circular(20),

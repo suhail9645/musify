@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'widget/search_header.dart';
 
 class SearchScreen extends StatefulWidget {
-  SearchScreen({super.key});
+  const SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
